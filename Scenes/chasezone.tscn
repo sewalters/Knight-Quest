@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtcj3wxnxh2is"]
+
+[ext_resource type="Script" path="res://Scripts/chasezone.gd" id="1_m1njg"]
+[ext_resource type="PackedScene" uid="uid://c2lcpuc1bcum7" path="res://Scenes/purpleslime.tscn" id="1_qxrt2"]
+
+[node name="chasezone" type="Area2D"]
+collision_mask = 2
+input_pickable = false
+script = ExtResource("1_m1njg")
+
+[node name="purpleslime" parent="." instance=ExtResource("1_qxrt2")]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
