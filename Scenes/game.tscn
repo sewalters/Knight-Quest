@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://vm282gno6rtr"]
+[gd_scene load_steps=29 format=3 uid="uid://vm282gno6rtr"]
 
 [ext_resource type="Script" path="res://Scripts/game_manager.gd" id="1_fuhw0"]
 [ext_resource type="PackedScene" uid="uid://dd4bldtjappww" path="res://Scenes/player.tscn" id="1_ld5j7"]
@@ -7,6 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://glppqhkqrgwc" path="res://Scenes/coin.tscn" id="4_ke4d0"]
 [ext_resource type="PackedScene" uid="uid://somftruflt2y" path="res://Scenes/killzone.tscn" id="5_i3ti1"]
 [ext_resource type="PackedScene" uid="uid://cr7uelamccrlm" path="res://Scenes/greenslime.tscn" id="6_u0wuv"]
+[ext_resource type="Texture2D" uid="uid://vhyoqd1scuur" path="res://Assets/sprites/flag.png" id="8_nwgcx"]
+[ext_resource type="Script" path="res://Scripts/checkpointFlag.gd" id="9_7ta1q"]
+[ext_resource type="AudioStream" uid="uid://deewh34kuvxm" path="res://Assets/sounds/tap.wav" id="10_6uh8a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bfigm"]
 texture = ExtResource("2_yl5dx")
@@ -478,6 +481,82 @@ _data = {
 "move": SubResource("Animation_oyend")
 }
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_5f4v0"]
+atlas = ExtResource("8_nwgcx")
+region = Rect2(0, 0, 16, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7juo"]
+atlas = ExtResource("8_nwgcx")
+region = Rect2(0, 22, 16, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3nrjv"]
+atlas = ExtResource("8_nwgcx")
+region = Rect2(16, 22, 16, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jsvs"]
+atlas = ExtResource("8_nwgcx")
+region = Rect2(32, 22, 16, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ywukk"]
+atlas = ExtResource("8_nwgcx")
+region = Rect2(0, 44, 16, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bmniq"]
+atlas = ExtResource("8_nwgcx")
+region = Rect2(16, 44, 16, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48tla"]
+atlas = ExtResource("8_nwgcx")
+region = Rect2(48, 44, 16, 22)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o1gqh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5f4v0")
+}],
+"loop": true,
+"name": &"flag down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5f4v0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7juo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3nrjv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jsvs")
+}],
+"loop": false,
+"name": &"flag raise",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ywukk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bmniq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ywukk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_48tla")
+}],
+"loop": true,
+"name": &"flag up",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_olsdk"]
+size = Vector2(9, 19)
+
 [node name="Game" type="Node2D"]
 
 [node name="GameManager" type="Node" parent="."]
@@ -598,3 +677,24 @@ autoplay = "move"
 
 [node name="greenslime" parent="." instance=ExtResource("6_u0wuv")]
 position = Vector2(438, -15)
+
+[node name="CheckpointFlag" type="AnimatedSprite2D" parent="."]
+position = Vector2(136, 5)
+sprite_frames = SubResource("SpriteFrames_o1gqh")
+animation = &"flag up"
+autoplay = "flag down"
+script = ExtResource("9_7ta1q")
+
+[node name="Area2D" type="Area2D" parent="CheckpointFlag"]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckpointFlag/Area2D"]
+position = Vector2(-2.5, -0.5)
+shape = SubResource("RectangleShape2D_olsdk")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="CheckpointFlag"]
+stream = ExtResource("10_6uh8a")
+bus = &"SFX"
+
+[connection signal="animation_finished" from="CheckpointFlag" to="CheckpointFlag" method="_on_animation_finished"]
+[connection signal="body_entered" from="CheckpointFlag/Area2D" to="CheckpointFlag" method="_on_area_2d_body_entered"]
