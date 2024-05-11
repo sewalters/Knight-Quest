@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/purpleslime.gd" id="1_3hiyl"]
 [ext_resource type="Texture2D" uid="uid://36gxpp76cxb8" path="res://Assets/sprites/slime_purple.png" id="2_fcpeo"]
-[ext_resource type="PackedScene" uid="uid://somftruflt2y" path="res://Scenes/killzone.tscn" id="3_ssgqv"]
+[ext_resource type="Script" path="res://Scripts/HurtboxComponent.gd" id="3_nupw5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_exp5m"]
 atlas = ExtResource("2_fcpeo")
@@ -79,8 +79,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_eynio"]
-size = Vector2(14, 14)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l2ucd"]
+size = Vector2(14, 17)
 
 [node name="purpleslime" type="Node2D"]
 script = ExtResource("1_3hiyl")
@@ -89,9 +89,14 @@ script = ExtResource("1_3hiyl")
 sprite_frames = SubResource("SpriteFrames_v1vwe")
 animation = &"idle"
 autoplay = "idle"
+frame_progress = 0.373126
 
-[node name="killzone" parent="AnimatedSprite2D" instance=ExtResource("3_ssgqv")]
+[node name="HurtboxComponent" type="Area2D" parent="."]
+collision_mask = 2
+script = ExtResource("3_nupw5")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/killzone"]
-position = Vector2(0, 5)
-shape = SubResource("RectangleShape2D_eynio")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, 3.5)
+shape = SubResource("RectangleShape2D_l2ucd")
+
+[connection signal="area_entered" from="HurtboxComponent" to="HurtboxComponent" method="_on_area_entered"]

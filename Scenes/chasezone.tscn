@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c2lcpuc1bcum7" path="res://Scenes/purpleslime.tscn" id="1_qxrt2"]
 
 [node name="chasezone" type="Area2D"]
+collision_layer = 8
 collision_mask = 2
 input_pickable = false
 script = ExtResource("1_m1njg")
@@ -12,3 +13,4 @@ script = ExtResource("1_m1njg")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="tree_exited" from="purpleslime" to="." method="_on_purpleslime_tree_exited"]

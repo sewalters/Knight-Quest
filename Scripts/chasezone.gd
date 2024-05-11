@@ -7,12 +7,16 @@ func _process(delta):
 	
 	
 func _on_body_entered(body):
-	
-	purpleslime.direction = (body.global_position - purpleslime.global_position).normalized()
-	purpleslime.SPEED = 60
+	if purpleslime:
+		purpleslime.player = body
 	
 
 
 func _on_body_exited(body):
-	purpleslime.SPEED = 0
+	if purpleslime:
+		purpleslime.player = null
 	
+
+
+func _on_purpleslime_tree_exited():
+	queue_free()

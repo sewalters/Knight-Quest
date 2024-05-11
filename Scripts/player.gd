@@ -1,16 +1,28 @@
 extends CharacterBody2D
+class_name Player
 
 
 const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
+var input_enabled = true
 @onready var animated_sprite = $AnimatedSprite2D
+
 @onready var jump_sfx = $jump_sfx
+@onready var death_sfx = $death_sfx
+
+@onready var hitbox_component = $HitboxComponent
+@onready var health_component = $HealthComponent
+
+@onready var death_timer = $death_timer
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var jump_counter = 1; # Jump counter, decrements when user jumps. resets to 2 when user lands.
 
 func _physics_process(delta):
+	if input_enabled == false:
+			return
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -63,3 +75,15 @@ func _physics_process(delta):
 
 	move_and_slide()
 
+func death():
+	Engine.time_scale = 0.5
+	input_enabled = false
+	animated_sprite.play("death")
+	death_sfx.play()
+	death_timer.start()
+
+
+func _on_death_timer_timeout():
+	Engine.time_scale = 1.0
+	input_enabled = true
+	get_tree().reload_current_scene()

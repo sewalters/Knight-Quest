@@ -1,8 +1,11 @@
-[gd_scene load_steps=36 format=3 uid="uid://dd4bldtjappww"]
+[gd_scene load_steps=39 format=3 uid="uid://dd4bldtjappww"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_0o2e8"]
 [ext_resource type="Texture2D" uid="uid://c8evvkgn1mx2n" path="res://Assets/sprites/knight.png" id="1_5tona"]
 [ext_resource type="AudioStream" uid="uid://dt5gnytin6g6i" path="res://Assets/sounds/jump.wav" id="3_tlsfl"]
+[ext_resource type="Script" path="res://HealthComponent.gd" id="4_fxie4"]
+[ext_resource type="PackedScene" uid="uid://cxnax2dntmwrv" path="res://Scenes/hitbox_component.tscn" id="5_i6ds8"]
+[ext_resource type="AudioStream" uid="uid://boe6bkyv1vsfy" path="res://Assets/sounds/hurt.wav" id="6_wm0l4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gp7m7"]
 atlas = ExtResource("1_5tona")
@@ -275,4 +278,25 @@ shape = SubResource("CircleShape2D_ksolj")
 stream = ExtResource("3_tlsfl")
 bus = &"SFX"
 
+[node name="HealthComponent" type="Node2D" parent="."]
+script = ExtResource("4_fxie4")
+MAX_HEALTH = 3.0
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_i6ds8")]
+collision_layer = 2
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(1, -4)
+shape = SubResource("CircleShape2D_ksolj")
+
+[node name="death_sfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_wm0l4")
+bus = &"SFX"
+
+[node name="death_timer" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true
+
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="timeout" from="death_timer" to="." method="_on_death_timer_timeout"]

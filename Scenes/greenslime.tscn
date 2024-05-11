@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/greenslime.gd" id="1_5vemh"]
 [ext_resource type="Texture2D" uid="uid://ciei0wsoyeg6e" path="res://Assets/sprites/slime_green.png" id="1_q3tre"]
-[ext_resource type="PackedScene" uid="uid://somftruflt2y" path="res://Scenes/killzone.tscn" id="2_hvra8"]
+[ext_resource type="PackedScene" uid="uid://ven0qqkei7yq" path="res://Scenes/hurtbox_component.tscn" id="3_rmrht"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8i2bm"]
 atlas = ExtResource("1_q3tre")
@@ -40,8 +40,8 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wbm3b"]
-size = Vector2(14, 14)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f4582"]
+size = Vector2(14, 12)
 
 [node name="greenslime" type="Node2D"]
 script = ExtResource("1_5vemh")
@@ -51,12 +51,6 @@ sprite_frames = SubResource("SpriteFrames_xwukw")
 autoplay = "default"
 frame_progress = 0.12012
 
-[node name="killzone" parent="AnimatedSprite2D" instance=ExtResource("2_hvra8")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/killzone"]
-position = Vector2(0, 5)
-shape = SubResource("RectangleShape2D_wbm3b")
-
 [node name="RayCastRight" type="RayCast2D" parent="."]
 position = Vector2(0, 5)
 target_position = Vector2(9, 0)
@@ -64,3 +58,10 @@ target_position = Vector2(9, 0)
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 position = Vector2(0, 5)
 target_position = Vector2(-9, 0)
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("3_rmrht")]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_f4582")
