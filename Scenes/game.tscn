@@ -490,6 +490,7 @@ height = 164.0
 [node name="GameManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_fuhw0")
+coin_goal = 20
 
 [node name="player" parent="." instance=ExtResource("1_ld5j7")]
 position = Vector2(-1, -3)
