@@ -87,3 +87,11 @@ func _on_death_timer_timeout():
 	Engine.time_scale = 1.0
 	input_enabled = true
 	get_tree().reload_current_scene()
+	
+
+
+# Plays the sfx when the Fruit emits the eat_fruit signal.
+func _on_fruit_eat_fruit():
+	$fruit_sfx.play()
+	
+

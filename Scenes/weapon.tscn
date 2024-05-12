@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4tom4cn7bjwo"]
+
+[ext_resource type="Script" path="res://Scripts/Attack.gd" id="1_8qg21"]
+[ext_resource type="Texture2D" uid="uid://5vodavlsvddt" path="res://Assets/sprites/sword.png" id="2_qeqcg"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e5kd6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qeqcg")
+}],
+"loop": true,
+"name": &"sword",
+"speed": 5.0
+}]
+
+[node name="Weapon" type="Node2D"]
+script = ExtResource("1_8qg21")
+
+[node name="Sword" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_e5kd6")
+animation = &"sword"
+
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

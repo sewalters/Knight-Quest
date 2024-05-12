@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://vm282gno6rtr"]
+[gd_scene load_steps=21 format=3 uid="uid://vm282gno6rtr"]
 
 [ext_resource type="Script" path="res://Scripts/game_manager.gd" id="1_fuhw0"]
 [ext_resource type="PackedScene" uid="uid://dd4bldtjappww" path="res://Scenes/player.tscn" id="1_ld5j7"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://somftruflt2y" path="res://Scenes/killzone.tscn" id="5_i3ti1"]
 [ext_resource type="PackedScene" uid="uid://cr7uelamccrlm" path="res://Scenes/greenslime.tscn" id="6_u0wuv"]
 [ext_resource type="PackedScene" uid="uid://bcmwmr5wep0sm" path="res://Scenes/checkpoint_flag.tscn" id="8_h53ri"]
+[ext_resource type="PackedScene" uid="uid://b6lvrx4hv4sc6" path="res://Scenes/fruit.tscn" id="10_gufu5"]
 [ext_resource type="PackedScene" uid="uid://dtcj3wxnxh2is" path="res://Scenes/chasezone.tscn" id="10_kqvlu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bfigm"]
@@ -480,44 +481,6 @@ _data = {
 "move": SubResource("Animation_oyend")
 }
 
-[sub_resource type="Animation" id="Animation_o734h"]
-resource_name = "move"
-length = 3.0
-loop_mode = 2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.4, 2.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(568, -38), Vector2(700, -38)]
-}
-
-[sub_resource type="Animation" id="Animation_nh5q3"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(568, -38)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_txn5n"]
-_data = {
-"RESET": SubResource("Animation_nh5q3"),
-"move": SubResource("Animation_o734h")
-}
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_63i5v"]
 radius = 38.0
 height = 164.0
@@ -527,7 +490,6 @@ height = 164.0
 [node name="GameManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_fuhw0")
-TOTAL_COINS = 28
 
 [node name="player" parent="." instance=ExtResource("1_ld5j7")]
 position = Vector2(-1, -3)
@@ -556,7 +518,7 @@ shape = SubResource("WorldBoundaryShape2D_ct5c5")
 [node name="coins" type="Node" parent="."]
 
 [node name="coin15" parent="coins" instance=ExtResource("4_ke4d0")]
-position = Vector2(-26, -71)
+position = Vector2(-8, -59)
 
 [node name="coin11" parent="coins" instance=ExtResource("4_ke4d0")]
 position = Vector2(119, -81)
@@ -569,30 +531,6 @@ position = Vector2(165, -14)
 
 [node name="coin14" parent="coins" instance=ExtResource("4_ke4d0")]
 position = Vector2(-58, 3)
-
-[node name="coin22" parent="coins" instance=ExtResource("4_ke4d0")]
-position = Vector2(-92, -44)
-
-[node name="coin26" parent="coins" instance=ExtResource("4_ke4d0")]
-position = Vector2(-218, -42)
-
-[node name="coin27" parent="coins" instance=ExtResource("4_ke4d0")]
-position = Vector2(-233, -42)
-
-[node name="coin28" parent="coins" instance=ExtResource("4_ke4d0")]
-position = Vector2(-233, -29)
-
-[node name="coin29" parent="coins" instance=ExtResource("4_ke4d0")]
-position = Vector2(-218, -29)
-
-[node name="coin25" parent="coins" instance=ExtResource("4_ke4d0")]
-position = Vector2(-105, -44)
-
-[node name="coin24" parent="coins" instance=ExtResource("4_ke4d0")]
-position = Vector2(-105, -31)
-
-[node name="coin23" parent="coins" instance=ExtResource("4_ke4d0")]
-position = Vector2(-92, -31)
 
 [node name="coin" parent="coins" instance=ExtResource("4_ke4d0")]
 position = Vector2(54, 4)
@@ -645,7 +583,7 @@ position = Vector2(518, -12)
 [node name="platforms" type="Node" parent="."]
 
 [node name="Platform" parent="platforms" instance=ExtResource("3_c71cy")]
-position = Vector2(-27, -40)
+position = Vector2(-9, -40)
 
 [node name="Platform3" parent="platforms" instance=ExtResource("3_c71cy")]
 position = Vector2(167, -34)
@@ -665,15 +603,6 @@ libraries = {
 }
 autoplay = "move"
 
-[node name="Platform4" parent="platforms" instance=ExtResource("3_c71cy")]
-position = Vector2(568, -38)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="platforms/Platform4"]
-libraries = {
-"": SubResource("AnimationLibrary_txn5n")
-}
-autoplay = "move"
-
 [node name="greenslime" parent="." instance=ExtResource("6_u0wuv")]
 position = Vector2(438, -15)
 
@@ -683,6 +612,19 @@ position = Vector2(438, -15)
 position = Vector2(-168, -32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="chasezone"]
-position = Vector2(6, -5)
+position = Vector2(5, -5)
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_63i5v")
+
+[node name="Fruits" type="Node" parent="."]
+
+[node name="Fruit" parent="Fruits" instance=ExtResource("10_gufu5")]
+position = Vector2(46, -80)
+
+[node name="Fruit2" parent="Fruits" instance=ExtResource("10_gufu5")]
+position = Vector2(341, -31)
+
+[connection signal="body_entered" from="Fruits/Fruit" to="player" method="_on_fruit_body_entered"]
+[connection signal="eat_fruit" from="Fruits/Fruit" to="player" method="_on_fruit_eat_fruit"]
+[connection signal="body_entered" from="Fruits/Fruit2" to="player" method="_on_fruit_body_entered"]
+[connection signal="eat_fruit" from="Fruits/Fruit2" to="player" method="_on_fruit_eat_fruit"]

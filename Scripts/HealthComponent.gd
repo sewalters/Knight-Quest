@@ -1,6 +1,8 @@
 extends Node2D
 class_name HealthComponent
 
+signal damage_dealt
+
 @export var MAX_HEALTH := 10.0
 var health : float
 
@@ -11,6 +13,8 @@ func _ready():
 func damage(attack: Attack):
 	health -= attack.attack_damage
 	print(health)
+	$damage_sfx.play()
+	damage_dealt.emit(health)
 	
 	if health <=0: 
 		if get_parent().has_method("death"):
@@ -23,3 +27,5 @@ func heal(attack: Attack):
 	
 	if health > MAX_HEALTH:
 		health = MAX_HEALTH
+	damage_dealt.emit(health)
+

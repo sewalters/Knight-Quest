@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtquuhcijwn2c"]
+
+[ext_resource type="Script" path="res://Scripts/hud.gd" id="1_567iv"]
+[ext_resource type="Texture2D" uid="uid://dj2y5pxpmvcyo" path="res://Assets/sprites/health meter/hp_3.png" id="1_bki4c"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_567iv")
+
+[node name="Hearts" type="TextureRect" parent="."]
+offset_left = 25.0
+offset_top = 30.0
+offset_right = 70.0
+offset_bottom = 45.0
+scale = Vector2(5, 5)
+texture = ExtResource("1_bki4c")
+stretch_mode = 2

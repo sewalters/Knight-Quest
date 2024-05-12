@@ -1,0 +1,88 @@
+[gd_scene load_steps=13 format=3 uid="uid://b6lvrx4hv4sc6"]
+
+[ext_resource type="Texture2D" uid="uid://c25r0c7qialag" path="res://Assets/sprites/fruit.png" id="1_ojoad"]
+[ext_resource type="Script" path="res://Scripts/fruit.gd" id="1_p6lma"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmn2l"]
+atlas = ExtResource("1_ojoad")
+region = Rect2(0, 0, 14, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hyovl"]
+atlas = ExtResource("1_ojoad")
+region = Rect2(14, 0, 14, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kki1u"]
+atlas = ExtResource("1_ojoad")
+region = Rect2(28, 0, 14, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1eik3"]
+atlas = ExtResource("1_ojoad")
+region = Rect2(42, 0, 14, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13d08"]
+atlas = ExtResource("1_ojoad")
+region = Rect2(56, 0, 14, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3hfp2"]
+atlas = ExtResource("1_ojoad")
+region = Rect2(0, 15, 14, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yb7ty"]
+atlas = ExtResource("1_ojoad")
+region = Rect2(14, 15, 14, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rckvp"]
+atlas = ExtResource("1_ojoad")
+region = Rect2(28, 15, 14, 15)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_164w2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cmn2l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hyovl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kki1u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1eik3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13d08")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3hfp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yb7ty")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rckvp")
+}],
+"loop": true,
+"name": &"spin",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pm8bn"]
+radius = 6.0
+height = 14.0
+
+[node name="Fruit" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_p6lma")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_164w2")
+animation = &"spin"
+frame = 4
+frame_progress = 0.371697
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_pm8bn")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
