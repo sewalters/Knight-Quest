@@ -1,0 +1,63 @@
+[gd_scene load_steps=10 format=3 uid="uid://dorfb7jyh08ct"]
+
+[ext_resource type="Script" path="res://Scripts/redslime.gd" id="1_6udrj"]
+[ext_resource type="Texture2D" uid="uid://4fncw8d8taqv" path="res://Assets/sprites/slime_red.png" id="1_aecdv"]
+[ext_resource type="Script" path="res://Scripts/HurtboxComponent.gd" id="2_b5voe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n17hu"]
+atlas = ExtResource("1_aecdv")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wijjf"]
+atlas = ExtResource("1_aecdv")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_41fe2"]
+atlas = ExtResource("1_aecdv")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8e7e"]
+atlas = ExtResource("1_aecdv")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s5mac"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n17hu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wijjf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_41fe2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e8e7e")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m5y3d"]
+size = Vector2(14, 12)
+
+[node name="redslime" type="Node2D"]
+script = ExtResource("1_6udrj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -12)
+sprite_frames = SubResource("SpriteFrames_s5mac")
+animation = &"walk"
+autoplay = "walk"
+
+[node name="HurtboxComponent" type="Area2D" parent="AnimatedSprite2D"]
+position = Vector2(0, 6)
+collision_mask = 2
+script = ExtResource("2_b5voe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/HurtboxComponent"]
+shape = SubResource("RectangleShape2D_m5y3d")
+
+[connection signal="area_entered" from="AnimatedSprite2D/HurtboxComponent" to="." method="_on_hurtbox_component_area_entered"]
