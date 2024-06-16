@@ -16,3 +16,15 @@ func _process(delta):
 		animated_sprite_2d.flip_h = false
 	
 	position.x += direction * SPEED * delta
+
+
+func _on_hitbox_component_body_entered(body):
+	print("ouch!")
+
+func death():
+	print("I'm dead")
+	queue_free()
+
+
+func _on_health_component_damage_dealt():
+	pass # Replace with function body.

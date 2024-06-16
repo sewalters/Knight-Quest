@@ -1,8 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://dorfb7jyh08ct"]
+[gd_scene load_steps=14 format=3 uid="uid://dorfb7jyh08ct"]
 
 [ext_resource type="Script" path="res://Scripts/redslime.gd" id="1_6udrj"]
 [ext_resource type="Texture2D" uid="uid://4fncw8d8taqv" path="res://Assets/sprites/slime_red.png" id="1_aecdv"]
 [ext_resource type="Script" path="res://Scripts/HurtboxComponent.gd" id="2_b5voe"]
+[ext_resource type="PackedScene" uid="uid://cxnax2dntmwrv" path="res://Scenes/hitbox_component.tscn" id="4_4gxlh"]
+[ext_resource type="PackedScene" uid="uid://bc4dty1kj064o" path="res://Scenes/health_component.tscn" id="5_xrb5x"]
+[ext_resource type="AudioStream" uid="uid://boe6bkyv1vsfy" path="res://Assets/sounds/hurt.wav" id="6_ady3i"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n17hu"]
 atlas = ExtResource("1_aecdv")
@@ -43,6 +46,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m5y3d"]
 size = Vector2(14, 12)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w04xp"]
+size = Vector2(14, 12)
+
 [node name="redslime" type="Node2D"]
 script = ExtResource("1_6udrj")
 
@@ -52,12 +58,28 @@ sprite_frames = SubResource("SpriteFrames_s5mac")
 animation = &"walk"
 autoplay = "walk"
 
-[node name="HurtboxComponent" type="Area2D" parent="AnimatedSprite2D"]
-position = Vector2(0, 6)
+[node name="HealthComponent" parent="." instance=ExtResource("5_xrb5x")]
+position = Vector2(0, -12)
+MAX_HEALTH = 1.0
+
+[node name="damage_sfx" type="AudioStreamPlayer2D" parent="HealthComponent"]
+stream = ExtResource("6_ady3i")
+
+[node name="HurtboxComponent" type="Area2D" parent="."]
+position = Vector2(0, -6)
 collision_mask = 2
 script = ExtResource("2_b5voe")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/HurtboxComponent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("RectangleShape2D_m5y3d")
 
-[connection signal="area_entered" from="AnimatedSprite2D/HurtboxComponent" to="." method="_on_hurtbox_component_area_entered"]
+[node name="HitboxComponent" parent="." instance=ExtResource("4_4gxlh")]
+position = Vector2(0, -12)
+collision_layer = 8
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_w04xp")
+
+[connection signal="area_entered" from="HurtboxComponent" to="." method="_on_hurtbox_component_area_entered"]

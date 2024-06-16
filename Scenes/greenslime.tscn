@@ -1,8 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cr7uelamccrlm"]
+[gd_scene load_steps=14 format=3 uid="uid://cr7uelamccrlm"]
 
 [ext_resource type="Script" path="res://Scripts/greenslime.gd" id="1_5vemh"]
 [ext_resource type="Texture2D" uid="uid://ciei0wsoyeg6e" path="res://Assets/sprites/slime_green.png" id="1_q3tre"]
 [ext_resource type="PackedScene" uid="uid://ven0qqkei7yq" path="res://Scenes/hurtbox_component.tscn" id="3_rmrht"]
+[ext_resource type="PackedScene" uid="uid://bc4dty1kj064o" path="res://Scenes/health_component.tscn" id="4_ggmb2"]
+[ext_resource type="AudioStream" uid="uid://boe6bkyv1vsfy" path="res://Assets/sounds/hurt.wav" id="5_exaoi"]
+[ext_resource type="PackedScene" uid="uid://cxnax2dntmwrv" path="res://Scenes/hitbox_component.tscn" id="5_konj1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8i2bm"]
 atlas = ExtResource("1_q3tre")
@@ -40,6 +43,9 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xv4rx"]
+size = Vector2(14, 13)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f4582"]
 size = Vector2(14, 12)
 
@@ -49,7 +55,6 @@ script = ExtResource("1_5vemh")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xwukw")
 autoplay = "default"
-frame_progress = 0.12012
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
 position = Vector2(0, 5)
@@ -58,6 +63,20 @@ target_position = Vector2(9, 0)
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 position = Vector2(0, 5)
 target_position = Vector2(-9, 0)
+
+[node name="HitboxComponent" parent="." instance=ExtResource("5_konj1")]
+collision_layer = 8
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0, 5.5)
+shape = SubResource("RectangleShape2D_xv4rx")
+
+[node name="HealthComponent" parent="." instance=ExtResource("4_ggmb2")]
+MAX_HEALTH = 1.0
+
+[node name="damage_sfx" type="AudioStreamPlayer2D" parent="HealthComponent"]
+stream = ExtResource("5_exaoi")
 
 [node name="HurtboxComponent" parent="." instance=ExtResource("3_rmrht")]
 collision_mask = 2

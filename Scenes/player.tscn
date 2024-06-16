@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://dd4bldtjappww"]
+[gd_scene load_steps=44 format=3 uid="uid://dd4bldtjappww"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_0o2e8"]
 [ext_resource type="Texture2D" uid="uid://c8evvkgn1mx2n" path="res://Assets/sprites/knight.png" id="1_5tona"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cxnax2dntmwrv" path="res://Scenes/hitbox_component.tscn" id="5_i6ds8"]
 [ext_resource type="AudioStream" uid="uid://boe6bkyv1vsfy" path="res://Assets/sounds/hurt.wav" id="6_wm0l4"]
 [ext_resource type="PackedScene" uid="uid://c4tom4cn7bjwo" path="res://Scenes/weapon.tscn" id="8_0qlev"]
+[ext_resource type="Script" path="res://Scripts/WeaponContainer.gd" id="8_2of4t"]
 [ext_resource type="PackedScene" uid="uid://dtquuhcijwn2c" path="res://Scenes/hud.tscn" id="9_oityh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gp7m7"]
@@ -305,6 +306,14 @@ health_component = NodePath("../HealthComponent")
 position = Vector2(1, -4)
 shape = SubResource("CircleShape2D_ksolj")
 
+[node name="WeaponContainer" type="Node2D" parent="."]
+script = ExtResource("8_2of4t")
+
+[node name="Weapon" parent="WeaponContainer" instance=ExtResource("8_0qlev")]
+position = Vector2(12, -4)
+
+[node name="AttackTimer" type="Timer" parent="WeaponContainer"]
+
 [node name="death_sfx" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_wm0l4")
 bus = &"SFX"
@@ -319,12 +328,10 @@ volume_db = -10.0
 pitch_scale = 1.5
 bus = &"SFX"
 
-[node name="Weapon" parent="." instance=ExtResource("8_0qlev")]
-position = Vector2(12, -4)
-
 [node name="HUD" parent="." instance=ExtResource("9_oityh")]
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="damage_dealt" from="HealthComponent" to="HUD" method="_on_health_component_damage_dealt"]
 [connection signal="area_entered" from="HitboxComponent" to="." method="_on_hitbox_component_area_entered"]
+[connection signal="timeout" from="WeaponContainer/AttackTimer" to="WeaponContainer" method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="death_timer" to="." method="_on_death_timer_timeout"]

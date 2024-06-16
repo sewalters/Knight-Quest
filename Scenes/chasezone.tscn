@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://dtcj3wxnxh2is"]
+[gd_scene load_steps=7 format=3 uid="uid://dtcj3wxnxh2is"]
 
 [ext_resource type="Script" path="res://Scripts/chasezone.gd" id="1_m1njg"]
 [ext_resource type="PackedScene" uid="uid://c2lcpuc1bcum7" path="res://Scenes/purpleslime.tscn" id="1_qxrt2"]
+[ext_resource type="PackedScene" uid="uid://bc4dty1kj064o" path="res://Scenes/health_component.tscn" id="3_id5ou"]
+[ext_resource type="PackedScene" uid="uid://cxnax2dntmwrv" path="res://Scenes/hitbox_component.tscn" id="4_m88ku"]
+[ext_resource type="AudioStream" uid="uid://boe6bkyv1vsfy" path="res://Assets/sounds/hurt.wav" id="4_y7f8p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bnlr2"]
+size = Vector2(14, 11)
 
 [node name="chasezone" type="Area2D"]
 collision_layer = 8
@@ -10,6 +16,20 @@ input_pickable = false
 script = ExtResource("1_m1njg")
 
 [node name="purpleslime" parent="." instance=ExtResource("1_qxrt2")]
+
+[node name="HealthComponent" parent="purpleslime" instance=ExtResource("3_id5ou")]
+MAX_HEALTH = 1.0
+
+[node name="damage_sfx" type="AudioStreamPlayer2D" parent="purpleslime/HealthComponent"]
+stream = ExtResource("4_y7f8p")
+
+[node name="HitboxComponent" parent="purpleslime" instance=ExtResource("4_m88ku")]
+collision_layer = 8
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="purpleslime/HitboxComponent"]
+position = Vector2(0, 6.5)
+shape = SubResource("RectangleShape2D_bnlr2")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

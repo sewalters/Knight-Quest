@@ -13,3 +13,4 @@ func _on_area_entered(area : HitboxComponent):
 	attack.attack_position = global_position
 	
 	area.damage(attack)
+
