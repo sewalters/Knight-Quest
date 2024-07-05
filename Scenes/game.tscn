@@ -1,7 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://vm282gno6rtr"]
+[gd_scene load_steps=23 format=3 uid="uid://vm282gno6rtr"]
 
 [ext_resource type="Script" path="res://Scripts/game_manager.gd" id="1_fuhw0"]
 [ext_resource type="PackedScene" uid="uid://dd4bldtjappww" path="res://Scenes/player.tscn" id="1_ld5j7"]
+[ext_resource type="PackedScene" uid="uid://ck5kjr6827bsu" path="res://Scenes/win_message.tscn" id="2_hhd81"]
 [ext_resource type="Texture2D" uid="uid://drg5gbuaggri5" path="res://Assets/sprites/world_tileset.png" id="2_yl5dx"]
 [ext_resource type="PackedScene" uid="uid://cprsl7wcnyuaw" path="res://Scenes/platform.tscn" id="3_c71cy"]
 [ext_resource type="PackedScene" uid="uid://glppqhkqrgwc" path="res://Scenes/coin.tscn" id="4_ke4d0"]
@@ -491,6 +492,7 @@ height = 164.0
 [node name="GameManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_fuhw0")
+winText = ExtResource("2_hhd81")
 coin_goal = 20
 
 [node name="player" parent="." instance=ExtResource("1_ld5j7")]

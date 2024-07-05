@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name Player
 
-
+@export var loseText: PackedScene
 const SPEED = 130.0
 const JUMP_VELOCITY = -300.0
 var input_enabled = true
@@ -76,6 +76,8 @@ func _physics_process(delta):
 	move_and_slide()
 
 func death():
+	var deathScreen = loseText.instantiate()
+	add_child(deathScreen)
 	Engine.time_scale = 0.5
 	input_enabled = false
 	animated_sprite.play("death")

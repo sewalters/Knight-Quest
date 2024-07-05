@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://ck5kjr6827bsu"]
+
+[ext_resource type="Texture2D" uid="uid://t56aolursviv" path="res://Assets/sprites/win text.png" id="1_727si"]
+
+[node name="Win Message" type="CanvasLayer"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -258.0
+offset_top = -95.0
+offset_right = 6.0
+offset_bottom = -55.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+texture = ExtResource("1_727si")
+expand_mode = 3

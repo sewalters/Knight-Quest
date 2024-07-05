@@ -1,7 +1,8 @@
-[gd_scene load_steps=43 format=3 uid="uid://dd4bldtjappww"]
+[gd_scene load_steps=44 format=3 uid="uid://dd4bldtjappww"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_0o2e8"]
 [ext_resource type="Texture2D" uid="uid://c8evvkgn1mx2n" path="res://Assets/sprites/knight.png" id="1_5tona"]
+[ext_resource type="PackedScene" uid="uid://c26o70j1k1ujv" path="res://Scenes/death_message.tscn" id="2_7vk2h"]
 [ext_resource type="AudioStream" uid="uid://dt5gnytin6g6i" path="res://Assets/sounds/jump.wav" id="3_tlsfl"]
 [ext_resource type="Script" path="res://Scripts/HealthComponent.gd" id="4_hgf8g"]
 [ext_resource type="PackedScene" uid="uid://cxnax2dntmwrv" path="res://Scenes/hitbox_component.tscn" id="5_i6ds8"]
@@ -270,6 +271,7 @@ z_index = 5
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_0o2e8")
+loseText = ExtResource("2_7vk2h")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -12)
@@ -320,7 +322,7 @@ pitch_scale = 1.5
 bus = &"SFX"
 
 [node name="Weapon" parent="." instance=ExtResource("8_0qlev")]
-position = Vector2(12, -4)
+position = Vector2(1, -4)
 
 [node name="HUD" parent="." instance=ExtResource("9_oityh")]
 

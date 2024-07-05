@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://c4tom4cn7bjwo"]
+[gd_scene load_steps=6 format=3 uid="uid://c4tom4cn7bjwo"]
 
 [ext_resource type="Script" path="res://Scripts/Attack.gd" id="1_8qg21"]
 [ext_resource type="Texture2D" uid="uid://5vodavlsvddt" path="res://Assets/sprites/sword.png" id="2_qeqcg"]
+[ext_resource type="PackedScene" uid="uid://ven0qqkei7yq" path="res://Scenes/hurtbox_component.tscn" id="3_ce78k"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_e5kd6"]
 animations = [{
@@ -14,14 +15,25 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bqnn6"]
+size = Vector2(14, 8)
+
 [node name="Weapon" type="Node2D"]
 script = ExtResource("1_8qg21")
 
 [node name="Sword" type="AnimatedSprite2D" parent="."]
+position = Vector2(11, 0)
 sprite_frames = SubResource("SpriteFrames_e5kd6")
 animation = &"sword"
 
 [node name="AttackTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="HurtboxComponent" parent="." instance=ExtResource("3_ce78k")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(14, 0)
+shape = SubResource("RectangleShape2D_bqnn6")
+
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="area_entered" from="HurtboxComponent" to="." method="_on_hurtbox_component_area_entered"]

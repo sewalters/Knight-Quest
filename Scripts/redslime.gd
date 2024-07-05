@@ -12,5 +12,4 @@ func _on_hurtbox_component_area_entered(area):
 	var attack = Attack.new()
 	attack.attack_damage = attack_damage
 	attack.attack_position = global_position
-	
 	area.damage(attack)

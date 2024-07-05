@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://somftruflt2y"]
+[gd_scene load_steps=4 format=3 uid="uid://somftruflt2y"]
 
 [ext_resource type="Script" path="res://Scripts/killzone.gd" id="1_a6b33"]
 [ext_resource type="AudioStream" uid="uid://boe6bkyv1vsfy" path="res://Assets/sounds/hurt.wav" id="2_gxplq"]
+[ext_resource type="PackedScene" uid="uid://c26o70j1k1ujv" path="res://Scenes/death_message.tscn" id="2_htule"]
 
 [node name="killzone" type="Area2D"]
 collision_mask = 2
 script = ExtResource("1_a6b33")
+loseText = ExtResource("2_htule")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.6

@@ -28,4 +28,3 @@ func heal(attack: Attack):
 	if health > MAX_HEALTH:
 		health = MAX_HEALTH
 	damage_dealt.emit(health)
-

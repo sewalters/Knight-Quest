@@ -19,4 +19,5 @@ func _on_body_exited(body):
 
 
 func _on_purpleslime_tree_exited():
-	queue_free()
+	set_monitoring(false)
+	call_deferred("free")
